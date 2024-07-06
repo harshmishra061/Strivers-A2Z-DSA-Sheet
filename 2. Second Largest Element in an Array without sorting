@@ -1,0 +1,16 @@
+class Solution {
+  public:
+    int print2largest(vector<int> &arr) {
+        int n = arr.size();
+        int lar = arr[0], secLar = -1;
+        for(int i = 1;i < n;i++) {
+            if(arr[i] > lar) {
+                secLar = lar;
+                lar = arr[i];
+            } else if(arr[i] > secLar && arr[i] != lar) {
+                secLar = arr[i];
+            }
+        }
+        return secLar;
+    }
+};
