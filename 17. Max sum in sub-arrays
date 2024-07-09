@@ -1,0 +1,19 @@
+long long pairWithMaxSum(long long arr[], long long n) {
+   vector<long long> nsl(n);
+   stack<long long> st;
+   long long res = 0;
+   for(int i = 0;i < n;i++) {
+       while(!st.empty() && st.top() >= arr[i]) {
+           long long val = st.top(); st.pop();
+           res = max(res, val + arr[i]);
+       }
+       if(st.empty()) {
+           nsl[i] = -1;
+       } else {
+           res = max(res, st.top() + arr[i]);
+           nsl[i] = st.top();
+       }
+       st.push(arr[i]);
+   }
+   return res;
+}
