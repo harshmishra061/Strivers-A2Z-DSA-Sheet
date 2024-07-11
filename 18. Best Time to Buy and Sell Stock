@@ -1,0 +1,15 @@
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int n = prices.size(), res = 0;
+        int bestBuyCost = INT_MAX;
+        for(int i = 0;i < n;i++) {
+            int sellCost = prices[i];
+            bestBuyCost = min(bestBuyCost, prices[i]);
+            int profit = sellCost - bestBuyCost;
+
+            res = max(res, profit);
+        }
+        return res;
+    }
+};
