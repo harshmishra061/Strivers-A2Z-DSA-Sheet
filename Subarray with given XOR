@@ -1,0 +1,15 @@
+int Solution::solve(vector<int> &arr, int k) {
+    int n = arr.size();
+    map<int, int> mp;
+    int prexor = 0;
+    int ans = 0;
+    mp[0] = 1;
+    for(int i = 0;i < n;i++) {
+        prexor = prexor ^ arr[i];
+        if(mp.find(prexor^k) != mp.end()) {
+            ans += mp[prexor^k];
+        }
+        mp[prexor]++;
+    }
+    return ans;
+}
