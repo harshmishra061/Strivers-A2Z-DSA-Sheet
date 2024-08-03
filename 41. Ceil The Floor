@@ -1,0 +1,15 @@
+vector<int> getFloorAndCeil(int x, vector<int> &arr) {
+    int floorValue = -1000001, ceilValue = 1000001, n = arr.size();
+    for(int i = 0;i < n;i++) {
+        if(arr[i] <= x && floorValue < arr[i]) {
+            floorValue = arr[i];
+        } 
+        if(x <= arr[i] && arr[i] < ceilValue) {
+                ceilValue = arr[i];
+        }
+    }
+    
+    if(floorValue == -1000001) floorValue = -1;
+    if(ceilValue == 1000001) ceilValue = -1;
+    return {floorValue, ceilValue};
+}
