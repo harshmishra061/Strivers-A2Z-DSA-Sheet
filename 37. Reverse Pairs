@@ -1,0 +1,46 @@
+class Solution {
+    void merge(vector<int>& nums, int i, int mid, int j, int& res) {
+        // code for finding reverse pair
+        int p = mid + 1;
+        for(int k = i; k <= mid;k++) {
+            while(p <= j && nums[k] > 2LL * nums[p]) p++;
+            res += p - mid - 1;
+        }
+        // end of code for findinng reverse pair
+        
+        vector<int> temp(j - i + 1);
+        int ptr1 = i, ptr2 = mid + 1, ptr = 0;
+        while(ptr1 <= mid && ptr2 <= j) {
+            if(nums[ptr1] <= nums[ptr2]) {
+                temp[ptr++] = nums[ptr1++];
+            } else {
+                temp[ptr++] = nums[ptr2++];
+            }
+        }
+        while(ptr1 <= mid) {
+            temp[ptr++] = nums[ptr1++];
+        }
+        while(ptr2 <= j) {
+            temp[ptr++] = nums[ptr2++];
+        }
+
+        for(ptr = 0;ptr < temp.size();ptr++) {
+            nums[i + ptr] = temp[ptr];
+        }
+    }
+
+
+    void mergeSort(vector<int>& nums, int i, int j, int& res) {
+        if(i >= j) return;
+        int mid = i + (j - i) / 2;
+        mergeSort(nums, i, mid, res);
+        mergeSort(nums, mid + 1, j, res);
+        merge(nums, i, mid, j, res);
+    }
+public:
+    int reversePairs(vector<int>& nums) {
+        int n = nums.size(), res = 0;
+        mergeSort(nums, 0, n - 1, res);
+        return res;
+    }
+};
