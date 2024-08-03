@@ -1,0 +1,37 @@
+void merge(long long arr[], int i, int mid, int j, long long int& res) {
+        vector<long long> temp(j - i + 1);
+        int ptr1 = i, ptr2 = mid + 1, ptr = 0;
+        while(ptr1 <= mid && ptr2 <= j) {
+            if(arr[ptr1] <= arr[ptr2]) {
+                res += ptr2 - mid - 1;
+                temp[ptr++] = arr[ptr1++];
+            } else {
+                temp[ptr++] = arr[ptr2++];
+            }
+        }
+        
+        while(ptr1 <= mid) {
+            res += j - mid;
+            temp[ptr++] = arr[ptr1++];
+        }
+        while(ptr2 <= j) temp[ptr++] = arr[ptr2++];
+        
+        for(ptr = 0;ptr < temp.size();ptr++) {
+            arr[i + ptr] = temp[ptr];
+        }
+    }
+    
+    void mergeSort(long long arr[], int i, int j, long long int& res) {
+        if(i >= j) return;
+        int mid = i + (j - i) / 2;
+        mergeSort(arr, i, mid, res);
+        mergeSort(arr, mid + 1, j, res);
+        merge(arr, i, mid, j, res);
+    }
+  public:
+    long long int inversionCount(long long arr[], int n) {
+        long long int res = 0;
+        mergeSort(arr, 0, n - 1, res);
+        // for(int i = 0;i < n;i++) cout << arr[i] << ' ';
+        return res;
+    }
