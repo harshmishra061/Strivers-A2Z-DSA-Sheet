@@ -1,0 +1,36 @@
+class Solution {
+    int helper(vector<int>& bloomDay, int d, int k) {
+        int cnt = 0, res = 0;
+        for(auto num : bloomDay) {
+            if(num <= d) {
+                cnt++;
+            } else {
+                cnt = 0;
+            }
+
+            if(cnt == k) {
+                res++;
+                cnt = 0;
+            }
+        }
+        return res;
+    }
+public:
+    int minDays(vector<int>& bloomDay, int m, int k) {
+        int n = bloomDay.size();
+        if(n < 1LL * m * k) return -1;
+
+        int low = 1, high = *max_element(bloomDay.begin(), bloomDay.end()), res = -1;
+        while(low <= high) {
+            int mid = low + (high - low) / 2;
+            int bucketPossibleToMake = helper(bloomDay, mid, k);
+            if(bucketPossibleToMake >= m) {
+                res = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return res;
+    }
+};
