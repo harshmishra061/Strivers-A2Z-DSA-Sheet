@@ -1,0 +1,32 @@
+class Solution {
+    int helper(vector<int>& weights, int cap) {
+        int curr = 0, numOfDays = 1;
+        for(auto weight : weights) {
+            if(curr + weight <= cap) {
+                curr += weight;
+            } else {
+                curr = weight;
+                numOfDays++;
+            }
+        }
+        return numOfDays;
+    }
+public:
+    int shipWithinDays(vector<int>& weights, int days) {
+        int n = weights.size();
+        int low = *max_element(weights.begin(), weights.end()), high = accumulate(weights.begin(), weights.end(), 0);
+        int res = -1;
+
+        while(low <= high) {
+            int mid = low + (high - low) / 2;
+            int nOfDaysReq = helper(weights, mid);
+            if(nOfDaysReq <= days) {
+                res = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return res;
+    }
+};
