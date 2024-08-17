@@ -1,0 +1,33 @@
+int nLessThanEqualTo(vector<vector<int>>& matrix, int value) {
+        int cnt = 0;
+        for(int i = 0;i < matrix.size();i++) {
+            int low = 0, high = matrix[0].size() - 1, res = matrix[0].size();
+            while(low <= high) {
+                int mid = low + (high - low) / 2;
+                if(value < matrix[i][mid]) {
+                    res = mid;
+                    high = mid - 1;
+                } else {
+                    low = mid + 1;
+                }
+            }
+            cnt += res;
+        }
+        return cnt;
+    }
+public:
+    int median(vector<vector<int>> &matrix, int R, int C){
+        int MedianPos = (R * C + 1) / 2;
+        int low = 0, high = INT_MAX, res = -1;
+        while(low <= high) {
+            int mid = low + (high - low) / 2;
+            int count = nLessThanEqualTo(matrix, mid);
+            if(MedianPos <= count) {
+                res = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return res;
+    }
