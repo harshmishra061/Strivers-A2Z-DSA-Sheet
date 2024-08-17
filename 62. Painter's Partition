@@ -1,0 +1,26 @@
+int findLargestMinDistance(vector<int> &boards, int k) {
+    // minimize the maximum sum of subarray by partitioning it into k parts
+    int low = *max_element(boards.begin(), boards.end());
+    int high = accumulate(boards.begin(), boards.end(), 0);
+    int res = -1;
+
+    while(low <= high) {
+        int mid = low + (high - low) / 2;
+        int nOfPainter = 1, curr = boards[0];
+        for(int i = 1;i < boards.size();i++) {
+            if(curr + boards[i] <= mid) {
+                curr += boards[i];
+            } else {
+                curr = boards[i];
+                nOfPainter++;
+            }
+        }
+        if(nOfPainter <= k) {
+            res = mid;
+            high = mid - 1;
+        } else {
+            low = mid + 1;
+        }
+    } 
+    return res;
+}
