@@ -1,0 +1,23 @@
+#include<bits/stdc++.h>
+int kthElement(vector<int> &nums1, vector<int>& nums2, int n, int m, int k){
+  if(nums1.size() > nums2.size()) return kthElement(nums2, nums1, m, n, k);
+      int low = max(0, k - m), high = min(k, n);
+      while(low <= high) {
+          int l1 = low + (high - low) / 2;
+          int l2 = k - l1;
+
+          int a1p1 = l1 == 0 ? INT_MIN : nums1[l1 - 1];
+          int a1p2 = l1 == n ? INT_MAX : nums1[l1];
+          int a2p1 = l2 == 0 ? INT_MIN : nums2[l2 - 1];
+          int a2p2 = l2 == m ? INT_MAX : nums2[l2];
+
+          if(a1p1 <= a2p2 && a2p1 <= a1p2) {
+              return max(a1p1, a2p1);
+          } else if(a1p1 > a2p2) {
+              high = l1 - 1;
+          } else {
+              low = l1 + 1;
+          }
+      }
+      return -1;
+}
