@@ -16,3 +16,40 @@ public:
         return k + res + 1;
     }
 };
+
+// Binary Search on Result
+class Solution {
+    int helper(vector<int>& arr, int val) {
+        int low = 0, high = arr.size() - 1, res = arr.size();
+        while(low <= high) {
+            int mid = low + (high - low) / 2;
+            if(val <= arr[mid]) {
+                res = mid;
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return res;
+    }
+public:
+    int findKthPositive(vector<int>& arr, int k) {
+        int n = arr.size();
+        int low = 1, high = 2002, res = -1;
+        while(low <= high) {
+            int mid = low + (high - low) / 2;
+            int posOfMid = helper(arr, mid);
+            int missingNumbers = mid - posOfMid;
+            if(posOfMid < n && arr[posOfMid] == mid) missingNumbers--;
+            if(missingNumbers == k) {
+                if(posOfMid < n && arr[posOfMid] == mid) high = mid - 1;
+                else return mid;
+            } else if(missingNumbers > k) {
+                high = mid - 1;
+            } else {
+                low = mid + 1;
+            }
+        }
+        return -1;
+    }
+};
