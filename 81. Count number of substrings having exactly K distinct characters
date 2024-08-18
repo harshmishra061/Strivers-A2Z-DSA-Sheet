@@ -1,0 +1,62 @@
+int helper(string& s, int k) {
+        int res = 0, i = 0;
+        int mp[26] = {0};
+        int disCount = 0;
+        
+        for(int j = 0;j < s.size();j++) {
+            mp[s[j] - 'a']++;
+            if(mp[s[j] - 'a'] == 1) disCount++;
+            while(disCount > k) {
+                mp[s[i] - 'a']--;
+                if(mp[s[i] - 'a'] == 0) disCount--;
+                i++;
+            }
+            res += j - i + 1;
+        }
+        return res;
+    }
+  public:
+    long long int substrCount (string s, int k) {
+    	// total substring having <= k distinct character - total substring having <= k - 1 distinct character
+    	return helper(s, k) - helper(s, k - 1);
+    }
+
+
+
+// Important three pointer
+long long int substrCount (string s, int k) {
+    	// Now I will try Three Pointer
+    	int n = s.size();
+    	int i = -1, j1 = -1, j2 = -1, disCount1 = 0, disCount2 = 0;
+    	int mp1[26] = {0}, mp2[26] = {0}, res = 0;
+    	
+    	while(i < n - 1) {
+    	    i++;
+    	    while(j1 < n - 1 && disCount1 <= k - 1) {
+    	        j1++;
+    	        mp1[s[j1] - 'a']++;
+    	        if(mp1[s[j1] - 'a'] == 1) disCount1++;
+    	    }
+    	    if(disCount1 > k - 1) {
+    	        mp1[s[j1] - 'a']--; disCount1--;
+    	        j1--;
+    	    }
+    	    
+    	    
+    	    while(j2 < n - 1 && disCount2 <= k) {
+    	        j2++;
+    	        mp2[s[j2] - 'a']++;
+    	        if(mp2[s[j2] - 'a'] == 1) disCount2++;
+    	    }
+    	    if(disCount2 > k) {
+    	        mp2[s[j2] - 'a']--; disCount2--;
+    	        j2--;
+    	    }
+    	    
+    	    res += j2 - j1;
+    	    
+    	    mp1[s[i] - 'a']--; if(mp1[s[i] - 'a'] == 0) disCount1--;
+    	    mp2[s[i] - 'a']--; if(mp2[s[i] - 'a'] == 0) disCount2--;
+    	}
+    	return res;
+    }
