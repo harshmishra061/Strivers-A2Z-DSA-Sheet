@@ -1,0 +1,9 @@
+class Solution {
+public:
+    string largestOddNumber(string num) {
+        int oddNumPos = num.size() - 1;
+        while(oddNumPos >= 0 && (num[oddNumPos] - '0') % 2 == 0) oddNumPos--;
+        if(oddNumPos == -1) return "";
+        return num.substr(0, oddNumPos + 1);
+    }
+};
