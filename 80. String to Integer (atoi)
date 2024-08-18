@@ -1,0 +1,24 @@
+class Solution {
+public:
+    int myAtoi(string s) {
+        int pos = 0, n = s.size(), sign = 1;
+        while(pos < n && s[pos] == ' ') pos++;
+        if(pos == n) return 0;
+        if(s[pos] == '-' || s[pos] == '+') {
+            if(s[pos] == '-') sign = -1;
+            pos++;
+        }
+        if(pos == n) return 0;
+        int res = 0;
+        cout << INT_MAX;
+        while(pos < n && '0' <= s[pos] && s[pos] <= '9') {
+            if(res > INT_MAX / 10 || res == INT_MAX / 10 && s[pos] - '0' > 7) {
+                if(sign == 1) return INT_MAX;
+                return INT_MIN;
+            }
+            res = res * 10 + (s[pos] - '0');
+            pos++;
+        }
+        return sign * res;
+    }
+};
