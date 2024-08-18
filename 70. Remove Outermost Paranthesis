@@ -1,0 +1,17 @@
+class Solution {
+public:
+    string removeOuterParentheses(string s) {
+        int diff = 0;
+        string res = "";
+        for(auto ch : s) {
+            if(ch == '(') {
+                diff += 1;
+                if(diff != 1) res += '(';
+            } else {
+                diff -= 1;
+                if(diff != 0) res += ')';
+            }
+        }
+        return res;
+    }
+};
