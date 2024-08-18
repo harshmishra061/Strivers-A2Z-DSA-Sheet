@@ -1,0 +1,18 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        int n = s.size();
+        int lastSpaceIdx = n;
+        string res = "";
+        for(int i = n - 1;i >= -1;i--) {
+            if(i == -1 || s[i] == ' ') {
+                if(res != "" && lastSpaceIdx - i - 1 > 0) res += ' ';
+                for(int p = i + 1;p < lastSpaceIdx;p++) {
+                    res += s[p];
+                }
+                lastSpaceIdx = i;
+            }
+        }
+        return res;
+    }
+};
