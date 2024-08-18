@@ -1,0 +1,17 @@
+class Solution {
+    bool isSubstring(string& s, string goal, int p) {
+        for(int i = 0;i < goal.size();i++) {
+            if(s[p + i] != goal[i]) return false;
+        }
+        return true;
+    }
+public:
+    bool rotateString(string s, string goal) {
+        if(s.size() != goal.size()) return false;
+        string newStr = s + s;
+        for(int i = 0;i < s.size();i++) {
+            if(isSubstring(newStr, goal, i)) return true;
+        }
+        return false;
+    }
+};
