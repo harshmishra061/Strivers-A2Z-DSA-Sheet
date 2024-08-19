@@ -1,0 +1,8 @@
+class Solution {
+public:
+    // We are just given the node to be deleted. Not given the head of the linked list.
+    void deleteNode(ListNode* node) {
+        node->val = node->next->val;
+        node->next = node->next->next;
+    }
+};
