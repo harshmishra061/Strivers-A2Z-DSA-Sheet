@@ -1,0 +1,29 @@
+// Iterative
+class Solution {
+public:
+    ListNode* reverseList(ListNode* curr) {
+        ListNode* prev = NULL;
+        while(curr != NULL) {
+            ListNode* next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+};
+
+// Recursive
+class Solution {
+public:
+    ListNode* reverseList(ListNode* curr) {
+        if(curr == NULL || curr->next == NULL) {
+            return curr;
+        } 
+        ListNode* rhead = reverseList(curr->next);
+        curr->next->next = curr;
+        curr->next = NULL;
+
+        return rhead;
+    }
+};
