@@ -1,0 +1,11 @@
+Node *insertAtEnd(Node *head, int x) {
+    if(!head) return new Node(x);
+    
+    Node* itr = head;
+    while(itr->next != NULL) itr = itr->next;
+    
+    itr->next = new Node(x);
+    
+    return head;
+    
+}
