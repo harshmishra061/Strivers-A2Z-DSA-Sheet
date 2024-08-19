@@ -1,0 +1,15 @@
+Node* deleteNode(Node* head, int x) {
+    Node* itr = head;
+    if(x == 1) {
+        head->next->prev = NULL;
+        return head->next;
+    }
+    
+    while(x > 1) {
+        itr = itr->next;
+        x--;
+    }
+    itr->prev->next = itr->next;
+    if(itr->next != NULL) itr->next->prev = itr->prev;
+    return head;
+}
