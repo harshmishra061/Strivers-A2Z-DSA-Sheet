@@ -1,0 +1,31 @@
+class Solution {
+    vector<int> Mancher(string str) {
+        vector<int> arr(str.size(), 0);
+        int c = 1, r = 1;
+        for(int i = 1;i < str.size();i++) {
+            int mirr = c - (i - c);
+            if(i < r) {
+                arr[i] = min(arr[mirr], r - i);
+            }
+            while(str[i - arr[i] - 1] == str[i + arr[i] + 1]) arr[i]++;
+            if(i + arr[i] > r) {
+                c = i;
+                r = i + arr[i];
+            }
+        }
+        return arr;
+    }
+public:
+    string longestPalindrome(string s) {
+        string str = "@#";
+        for(auto ch : s) {
+            str += ch;
+            str += '#';
+        }
+        str += '$';
+
+        vector<int> arr = Mancher(str);
+        int idx = max_element(arr.begin(), arr.end()) - arr.begin();
+        return s.substr((idx - arr[idx] + 1) / 2 - 1, arr[idx]);
+    }
+};
