@@ -1,0 +1,10 @@
+void addNode(Node *head, int pos, int data)
+{
+   Node* itr = head;
+   while(pos--) itr = itr->next;
+   Node* node = new Node(data);
+   node->next = itr->next;
+   node->prev = itr;
+   itr->next = node;
+   if(node->next != NULL) node->next->prev = node;
+}
