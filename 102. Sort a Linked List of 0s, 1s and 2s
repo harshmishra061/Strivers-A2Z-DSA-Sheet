@@ -1,0 +1,23 @@
+Node* segregate(Node* head) {
+    Node* z = new Node(-1), *o = new Node(-1), *t = new Node(-1);
+    Node* zItr = z, *oItr = o, *tItr = t;
+    
+    while(head != NULL) {
+        if(head->data == 0) {
+            zItr->next = head;
+            zItr = head;
+        } else if(head->data == 1) {
+            oItr->next = head;
+            oItr = head;
+        } else {
+            tItr->next = head;
+            tItr = head;
+        }
+        head = head->next;
+    }
+    
+    tItr->next = NULL;
+    oItr->next = t->next;
+    zItr->next = o->next;
+    return z->next;
+}
