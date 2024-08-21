@@ -1,0 +1,28 @@
+Node* reverse(Node* curr) {
+        Node* prev = NULL;
+        while(curr != NULL) {
+            Node* next = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = next;
+        }
+        return prev;
+    }
+  public:
+    Node* addOne(Node* head) {
+        head = reverse(head);
+        int carry = 1;
+        Node* itr = head;
+        while(itr != NULL) {
+            int sum = itr->data + carry;
+            itr->data = sum % 10;
+            carry = sum /10;
+            if(itr->next == NULL && carry) {
+                itr->next = new Node(carry);
+                carry = 0;
+            }
+            itr = itr->next;
+        }
+        head = reverse(head);
+        return head;
+    }
