@@ -1,0 +1,15 @@
+void deleteAllOccurOfX(struct Node** head_ref, int x) {
+    Node* itr = *head_ref;
+    while(itr != NULL) {
+        if(itr->prev == NULL) *head_ref = itr;
+        if(itr->data == x) {
+            if(itr->prev != NULL) {
+                itr->prev->next = itr->next;
+            }
+            if(itr->next != NULL) {
+                itr->next->prev = itr->prev;
+            }
+        }
+        itr = itr->next;
+    }
+}
