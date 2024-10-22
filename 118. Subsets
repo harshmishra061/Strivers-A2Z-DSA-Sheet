@@ -1,0 +1,19 @@
+class Solution {
+    void subsets(int idx, vector<int>& nums, vector<int>& vec, vector<vector<int>>& res) {
+        if(idx == nums.size()) {
+            res.push_back(vec);
+            return;
+        }
+        subsets(idx + 1, nums, vec, res);
+        vec.push_back(nums[idx]);
+        subsets(idx + 1, nums, vec, res);
+        vec.pop_back();
+    }
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> res;
+        vector<int> vec;
+        subsets(0, nums, vec, res);
+        return res;
+    }
+};
