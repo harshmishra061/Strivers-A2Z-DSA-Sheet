@@ -1,0 +1,25 @@
+class Solution {
+    void combinationSum2(int idx, vector<int>& candidates, int target, vector<int>& arr, vector<vector<int>>& res) {
+        if(target < 0) return;
+        if(target == 0) {
+            res.push_back(arr);
+            return;
+        }
+
+
+        for(int i = idx;i < candidates.size();i++) {
+            if(i > idx && candidates[i - 1] == candidates[i]) continue;
+            arr.push_back(candidates[i]);
+            combinationSum2(i + 1, candidates, target - candidates[i], arr, res);
+            arr.pop_back();
+        }
+    }
+public:
+    vector<vector<int>> combinationSum2(vector<int>& candidates, int target) {
+        sort(candidates.begin(), candidates.end());
+        vector<vector<int>> res;
+        vector<int> arr;
+        combinationSum2(0, candidates, target, arr, res);
+        return res;
+    }
+};
