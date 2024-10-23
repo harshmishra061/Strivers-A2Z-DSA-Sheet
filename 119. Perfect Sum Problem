@@ -1,0 +1,19 @@
+class Solution{
+    int perfectSumCount(int idx, int arr[], int n, int sum, vector<vector<int>>& dp) {
+        if(sum < 0) return 0;
+        if(idx == n) return sum == 0;
+        
+        if(dp[idx][sum] != -1) return dp[idx][sum];
+        int res = 0;
+        res = (1LL * res + perfectSumCount(idx + 1, arr, n, sum - arr[idx], dp)) % 1000000007;
+        res = (1LL * res + perfectSumCount(idx + 1, arr, n , sum, dp)) % 1000000007;
+        return dp[idx][sum] = res;
+    }
+	public:
+	int perfectSum(int arr[], int n, int sum)
+	{
+	    vector<vector<int>> dp(n, vector<int>(sum + 1, -1));
+        return perfectSumCount(0, arr, n, sum, dp);
+	}
+	  
+};
