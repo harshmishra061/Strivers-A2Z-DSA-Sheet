@@ -1,0 +1,21 @@
+class Solution {
+    void combinationSum(int idx, vector<int>& candidates, int target, vector<int>& arr, vector<vector<int>>& res) {
+        if(idx == candidates.size()) {
+            if(target == 0) res.push_back(arr);
+            return;
+        }
+        if(candidates[idx] <= target) {
+            arr.push_back(candidates[idx]);
+            combinationSum(idx, candidates, target - candidates[idx], arr, res);
+            arr.pop_back();
+        }
+        combinationSum(idx + 1, candidates, target, arr, res);
+    }
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        vector<int> arr;
+        combinationSum(0, candidates, target, arr, res);
+        return res;
+    }
+};
