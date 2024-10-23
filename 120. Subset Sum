@@ -1,0 +1,20 @@
+set<pair<int, int>> st;
+bool isSubsetPresent(int idx, int n, int sum, vector<int>& arr) {
+    if(sum < 0) return false;
+    if(sum == 0) return true;
+    if(idx == n) return false;
+
+    if(st.count({idx, sum})) return false;
+    bool res = isSubsetPresent(idx + 1, n, sum - arr[idx], arr);
+    if(res) return true;
+    res = isSubsetPresent(idx + 1, n, sum, arr);
+    if(res) return true;
+    st.insert({idx, sum});
+    return false;
+}
+
+
+bool isSubsetPresent(int n, int sum, vector<int> &arr)
+{
+    return isSubsetPresent(0, n, sum, arr);
+}
