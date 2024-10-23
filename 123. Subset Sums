@@ -1,0 +1,14 @@
+void subsetSums(int idx, vector<int>& arr, int sum, vector<int>& res) {
+        if(idx == arr.size()) {
+            res.push_back(sum);
+        } else {
+            subsetSums(idx + 1, arr, sum + arr[idx], res);
+            subsetSums(idx + 1, arr, sum, res);
+        }
+    }
+  public:
+    vector<int> subsetSums(vector<int> arr, int n) {
+        vector<int> res;
+        subsetSums(0, arr, 0, res);
+        return res;
+    }
