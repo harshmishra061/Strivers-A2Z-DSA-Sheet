@@ -1,0 +1,21 @@
+class Solution {
+    void combinationSum3(int idx, int k, int n, vector<int>& vec, vector<vector<int>>& res) {
+        if(k == 0) {
+            if(n == 0) res.push_back(vec);
+            return;
+        }
+        if(idx == 10 || n < 0) return;
+
+        combinationSum3(idx + 1, k, n, vec, res);
+        vec.push_back(idx);
+        combinationSum3(idx + 1, k - 1, n - idx, vec, res);
+        vec.pop_back();
+    }
+public:
+    vector<vector<int>> combinationSum3(int k, int n) {
+        vector<vector<int>> res;
+        vector<int> vec;
+        combinationSum3(1, k, n, vec, res);
+        return res;
+    }
+};
