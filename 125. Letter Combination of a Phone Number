@@ -1,0 +1,23 @@
+class Solution {
+    vector<string> letterCombinations(int idx, string& digits, map<char, string>& mp) {
+        if(idx == digits.size()) {
+            return {""};
+        }
+
+        vector<string> recRes = letterCombinations(idx + 1, digits, mp);
+        vector<string> res;
+        for(auto ch : mp[digits[idx]]) {
+            for(auto str : recRes) {
+                string nstr = ch + str;
+                res.push_back(nstr);
+            }
+        }
+        return res;
+    }
+public:
+    vector<string> letterCombinations(string digits) {
+        if(digits.size() == 0) return {};
+        map<char, string> mp{{'2', "abc"}, {'3', "def"}, {'4', "ghi"}, {'5', "jkl"}, {'6', "mno"}, {'7', "pqrs"}, {'8', "tuv"}, {'9', "wxyz"}};
+        return letterCombinations(0, digits, mp);
+    }
+};
