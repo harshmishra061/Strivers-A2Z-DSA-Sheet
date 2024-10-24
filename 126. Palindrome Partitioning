@@ -1,0 +1,32 @@
+class Solution {
+    bool isPalindromic(string str, int i, int j) {
+        while(i < j) {
+            if(str[i] != str[j]) return false;
+            i++, j--;
+        }
+        return true;
+    }
+
+    vector<vector<string>> partition(int pos, string& s) {
+        if(pos < 0) {
+            return {{}};
+        }
+        
+        vector<vector<string>> res;
+        for(int i = 0;i <= pos;i++) {
+            if(!isPalindromic(s, i, pos)) continue;
+            string str = s.substr(i, pos - i + 1);
+            vector<vector<string>> recAns = partition(i - 1, s);
+            for(auto vec : recAns) {
+                vec.push_back(str);
+                res.push_back(vec);
+            }
+        }
+        return res;
+    }
+public:
+    vector<vector<string>> partition(string s) {
+        int n = s.size();
+        return partition(n - 1, s);
+    }
+};
