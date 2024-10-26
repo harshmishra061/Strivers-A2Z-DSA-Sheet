@@ -1,0 +1,43 @@
+class Solution {
+    bool isSafe(char num, int i, int j, vector<vector<char>>& board) {
+        // row should not contain num
+        for(int c = 0;c < 9;c++) {
+            if(board[i][c] == num) return false;
+        }
+
+        // col should not contain num
+        for(int r = 0;r < 9;r++) {
+            if(board[r][j] == num) return false;
+        }
+
+        // 3 * 3 grid should not contain num
+        int x = i / 3 * 3;
+        int y = j / 3 * 3;
+        for(int r = x;r < x + 3;r++) {
+            for(int c = y;c < y + 3;c++) {
+                if(board[r][c] == num) return false;
+            }
+        }
+        return true;
+    }
+
+    bool solveSudoku(int i, int j, vector<vector<char>>& board) {
+        if(i == 9) return true;
+        if(j == 9) return solveSudoku(i + 1, 0, board);
+
+        if(board[i][j] != '.') return solveSudoku(i, j + 1, board);
+
+        for(char num = '1';num <= '9';num++) {
+            if(!isSafe(num, i, j, board)) continue;
+            board[i][j] = num;
+            if(solveSudoku(i, j + 1, board)) return true;
+            board[i][j] = '.';
+        }
+
+        return false;
+    }
+public:
+    void solveSudoku(vector<vector<char>>& board) {
+        solveSudoku(0, 0, board);
+    }
+};
