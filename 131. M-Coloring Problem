@@ -1,0 +1,33 @@
+class Solution {
+    bool possibleToColor(int node, vector<vector<int>>& adj, int& m, vector<int>& colorAssigned) {
+        if(node == adj.size()) return true;
+        
+        for(int c = 1;c <= m;c++) {
+            //check wheter color is matching with nbrs
+            bool valid = true;
+            for(auto nbr : adj[node]) {
+                if(colorAssigned[nbr] == c) valid = false;
+            }
+            
+            if(!valid) continue;
+            
+            colorAssigned[node] = c;
+            if(possibleToColor(node + 1, adj, m, colorAssigned)) return true;
+            colorAssigned[node] = -1;
+        }
+        return false;
+    }
+  public:
+    bool graphColoring(int v, vector<pair<int, int>>& edges, int m) {
+        vector<vector<int>> adj(v);
+        for(auto edge : edges) {
+            if(edge.first == edge.second) continue;
+            adj[edge.first].push_back(edge.second);
+            adj[edge.second].push_back(edge.first);
+        }
+        vector<int> colorAssigned(v, -1);
+        return possibleToColor(0, adj, m, colorAssigned);
+        
+        
+    }
+};
