@@ -1,0 +1,29 @@
+class Solution {
+    vector<char> operators;
+    void addOperators(int idx, string& num, int& target, string exp, vector<string>& res, long long calVal, long long prevVal) {
+        if(idx == num.size()) {
+            if(calVal == target) res.push_back(exp);
+            return;
+        }
+        for(int i = idx;i < num.size();i++) {
+            if(i > idx && num[idx] == '0') continue;
+            string str = num.substr(idx, i - idx + 1);
+            long long value = stol(str);
+            if(idx == 0) {
+                addOperators(i + 1, num, target, str, res, value, value);
+            } else {
+                addOperators(i + 1, num, target, exp + '+' + str, res, calVal + value, value);
+                addOperators(i + 1, num, target, exp + '-' + str, res, calVal - value, -value);
+                addOperators(i + 1, num, target, exp + '*' + str, res, calVal - prevVal + value * prevVal, prevVal * value);
+            }
+            
+        }
+    }
+public:
+    vector<string> addOperators(string num, int target) {
+        vector<string> res;
+        string exp = "";
+        addOperators(0, num, target, exp, res, 0, 0);
+        return res;
+    }
+};
