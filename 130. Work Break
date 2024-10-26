@@ -1,0 +1,21 @@
+class Solution {
+    vector<int> dp;
+    bool wordBreak(int idx, string& s, set<string>& wordDictSet) {
+        if(idx == s.size()) return true;
+
+        if(dp[idx] != -1) return false;
+        for(int j = idx;j < s.size();j++) {
+            string pref = s.substr(idx, j - idx + 1);
+            if(wordDictSet.count(pref)) {
+                if(wordBreak(j + 1, s, wordDictSet)) return true;
+            }
+        }
+        return dp[idx] = false;
+    }
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        dp.resize(201, -1);
+        set<string> wordDictSet(wordDict.begin(), wordDict.end());
+        return wordBreak(0, s, wordDictSet);
+    }
+};
