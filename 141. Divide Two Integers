@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int divide(long dividend, long divisor) {
+        long quotient = 0;
+        bool isNeg = false;
+
+        if(dividend >= 0 && divisor < 0) isNeg = true;
+        if(dividend < 0 && divisor > 0) isNeg = true;
+        dividend = abs(dividend);
+        divisor = abs(divisor);
+
+        for(int i = 31;i >= 0; i--) {
+            if(dividend >= (divisor * (1LL << i))) {
+                quotient += (1LL << i);
+                dividend -= (divisor * (1LL << i));
+            }
+            if(quotient >= INT_MAX && !isNeg) return INT_MAX;
+            if(quotient <= INT_MIN && isNeg) return INT_MIN;
+        }
+        if(isNeg) return -quotient;
+        return quotient;
+    }
+};
