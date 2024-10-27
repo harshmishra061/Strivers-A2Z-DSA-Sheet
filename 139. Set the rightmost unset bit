@@ -1,0 +1,10 @@
+int setBit(int n) {
+    int pos = 0;
+    while(n & (1 << pos)) {
+        pos++;
+    }
+    
+    n = (n | (1 << pos));
+    
+    return n;
+}
