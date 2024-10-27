@@ -1,0 +1,14 @@
+int countSetBits(int n)
+{
+    if(n == 0) return 0;
+    int np2 = 1;
+    while(np2 * 2 <= n) {
+        np2 *= 2;
+    }
+    
+    int totalSetBitsIn0ToNp2Minus1 = np2 / 2 * log2(np2);
+    int ExtraSetBitsInNp2ToN = n - np2 + 1;
+    
+    
+    return totalSetBitsIn0ToNp2Minus1 + ExtraSetBitsInNp2ToN + countSetBits(n - np2);
+}
