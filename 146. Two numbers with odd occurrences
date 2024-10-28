@@ -1,0 +1,25 @@
+class Solution{
+    public:
+    vector<long long int> twoOddNum(long long int arr[], long long int n)  
+    {
+        long long xorVal = 0;
+        for(int i = 0;i < n;i++){
+            xorVal ^= arr[i];
+        }
+        
+        // long long mask = xorVal & -xorVal; // method 1
+        long long mask = (xorVal & ~(xorVal - 1)); // method 2
+        
+        long long val1 = 0, val2 = 0;
+        for(int i = 0;i < n;i++) {
+            if(arr[i] & mask) {
+                val1 ^= arr[i];
+            } else {
+                val2 ^= arr[i];
+            }
+        }
+        
+        if(val1 < val2) swap(val1, val2);
+        return {val1, val2};
+    }
+};
