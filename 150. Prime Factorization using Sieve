@@ -1,0 +1,21 @@
+vector<int> findPrimeFactors(int N) {
+        vector<int> spf(N + 1, -1);
+        
+        for(long i = 2;i <= N;i++) {
+            if(spf[i] == -1) {
+                spf[i] = i;
+                for(long j = i * i;j <= N;j += i) {
+                    if(spf[j] == -1) {
+                        spf[j] = i;
+                    }
+                }
+            }
+        }
+        
+        vector<int> res;
+        while(N > 1) {
+            res.push_back(spf[N]);
+            N /= spf[N];
+        }
+        return res;
+    }
