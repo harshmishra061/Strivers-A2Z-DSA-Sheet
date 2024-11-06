@@ -11,3 +11,28 @@ vector<int>AllPrimeFactors(int N) {
 	    if(N != 1) res.push_back(N);
 	    return res;
 	}
+// using spf - smallest prime factor calculation
+vector<int>AllPrimeFactors(int N) {
+	    vector<int> smallestPrimeFactorOf(N + 1, -1);
+	    for(long i = 2;i <= N;i++) {
+	        
+	        if(smallestPrimeFactorOf[i] != -1) continue;
+	        
+	        smallestPrimeFactorOf[i] = i;
+	        
+	        for(long j = i * i;j <= N;j += i) {
+	            if(smallestPrimeFactorOf[j] != -1) continue;
+	            
+	            smallestPrimeFactorOf[j] = i;
+	        }
+	    }
+	    vector<int> res;
+	    while(N > 1) {
+	        int spf = smallestPrimeFactorOf[N];
+	        res.push_back(spf);
+	        while(N % spf == 0) {
+	            N /= spf;
+	        }
+	    }
+	    return res;
+	}
