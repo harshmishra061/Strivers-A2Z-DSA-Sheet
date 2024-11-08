@@ -1,0 +1,41 @@
+string infixToPostfix(string s) {
+        stack<string> st;
+        stack<char> op;
+        for(auto ch : s) {
+            if(ch == '(') {
+                op.push('(');
+            } else if(ch == ')') {
+                while(op.top() != '(') {
+                    char oper = op.top(); op.pop();
+                    string b = st.top(); st.pop();
+                    string a = st.top(); st.pop();
+                    string nres = "";
+                    nres += a; nres+=b; nres+=oper;
+                    st.push(nres);
+                }
+                op.pop();
+            } else if(ch == '+' || ch == '-' || ch == '*' || ch == '/' || ch == '^') {
+                while(!op.empty() && op.top() != '(' && precedence(op.top()) >= precedence(ch)) {
+                    char oper = op.top(); op.pop();
+                    string b = st.top(); st.pop();
+                    string a = st.top(); st.pop();
+                    string nres = "";
+                    nres += a; nres+=b; nres+=oper;
+                    st.push(nres);
+                }
+                op.push(ch);
+            } else {
+                st.push(string(1, ch));
+            }
+        }
+        while(!op.empty()) {
+            char oper = op.top(); op.pop();
+            string b = st.top(); st.pop();
+            string a = st.top(); st.pop();
+            string nres = "";
+            nres += a; nres+=b; nres+=oper;
+            st.push(nres);
+        }
+        
+        return st.top();
+    }
