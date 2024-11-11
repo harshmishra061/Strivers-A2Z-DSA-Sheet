@@ -1,0 +1,17 @@
+string postToPre(string post_exp) {
+    stack<string> st;
+    for(int i = 0;i < post_exp.size();i++) {
+        if(post_exp[i] == '+' || post_exp[i] == '-' || post_exp[i] == '*' || post_exp[i] == '/'){
+            string a = st.top(); st.pop();
+            string b = st.top(); st.pop();
+            string nstr = "";
+            nstr += post_exp[i];
+            nstr += b;
+            nstr += a;
+            st.push(nstr);
+        } else {
+            st.push(string(1, post_exp[i]));
+        }
+    }
+    return st.top();
+}
