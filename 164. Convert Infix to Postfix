@@ -1,0 +1,56 @@
+int prec(char ch) {
+        if(ch == '^') return 3;
+        if(ch == '+' || ch == '-') return 1;
+        if(ch == '*' || ch == '/') return 2;
+    }
+  public:
+    // Function to convert an infix expression to a postfix expression.
+    string infixToPostfix(string s) {
+        stack<string> operands;
+        stack<char> operators;
+        for(int i = 0;i < s.size();i++) {
+            if(s[i] == '(') {
+                operators.push('(');
+            } else if(s[i] == ')') {
+                while(operators.top() != '(') {
+                    string a = operands.top(); operands.pop();
+                    string b = operands.top(); operands.pop();
+                    char op = operators.top(); operators.pop();
+                    string nstr = "";
+                    nstr += b; nstr += a; nstr += op;
+                    
+                    operands.push(nstr);
+                }
+                operators.pop();
+            } else if(s[i] == '+' || s[i] == '-' || s[i] == '*' || s[i] == '/' || s[i] == '^'){
+                while(operators.size() != 0 && operators.top() != '(' && prec(operators.top()) >= prec(s[i])) {
+                    string a = operands.top(); operands.pop();
+                    string b = operands.top(); operands.pop();
+                    char op = operators.top(); operators.pop();
+                    string nstr = "";
+                    nstr += b; nstr += a; nstr += op;
+                    
+                    operands.push(nstr);
+                }
+                
+                operators.push(s[i]);
+            } else {
+                operands.push(string(1, s[i]));
+            }
+        }
+        
+        while(operators.size() != 0) {
+            string a = operands.top(); operands.pop();
+            string b = operands.top(); operands.pop();
+            char op = operators.top(); operators.pop();
+            string nstr = "";
+            nstr += b; nstr += a; nstr += op;
+            
+            operands.push(nstr);
+        }
+        
+        
+        return operands.top();
+        
+        
+    }
